@@ -6,52 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="349ca238-552d-44c9-88ee-232b24cd7942" name="Default Changelist" comment="commit lan 2">
-      <change afterPath="$PROJECT_DIR$/src/controller/BillServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/controller/CartServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/controller/ProductViewedServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/controller/SanPhamServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/dao/BillDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/dao/BillDAOImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/dao/BillDetailDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/dao/BillDetailDAOImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/Cart.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/ChiTietDonHang.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/DonHang.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/Item.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/search.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/searchbyprice.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/webbandienthoai/WEB-INF/classes/controller/ListImageServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/webbandienthoai/WEB-INF/classes/controller/ListImageServlet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/webbandienthoai/WEB-INF/classes/dao/SanPhamDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/webbandienthoai/WEB-INF/classes/dao/SanPhamDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/webbandienthoai/WEB-INF/classes/dao/SanPhamDAOImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/webbandienthoai/WEB-INF/classes/dao/SanPhamDAOImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/webbandienthoai/WEB-INF/classes/model/HinhAnh_SP.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/webbandienthoai/WEB-INF/classes/model/HinhAnh_SP.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/webbandienthoai/WEB-INF/classes/model/KhachHang.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/webbandienthoai/WEB-INF/classes/model/KhachHang.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/webbandienthoai/blank.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/webbandienthoai/blank.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/webbandienthoai/category.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/webbandienthoai/category.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/webbandienthoai/checkout.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/webbandienthoai/checkout.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/webbandienthoai/feedback.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/webbandienthoai/feedback.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/webbandienthoai/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/webbandienthoai/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/webbandienthoai/product.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/webbandienthoai/product.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/webbandienthoai/productviewed.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/webbandienthoai/productviewed.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/webbandienthoai/controller/ListImageServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/webbandienthoai/controller/ListImageServlet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/webbandienthoai/dao/SanPhamDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/webbandienthoai/dao/SanPhamDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/webbandienthoai/dao/SanPhamDAOImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/webbandienthoai/dao/SanPhamDAOImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/webbandienthoai/model/HinhAnh_SP.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/webbandienthoai/model/HinhAnh_SP.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/webbandienthoai/model/KhachHang.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/webbandienthoai/model/KhachHang.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/ListImageServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/ListImageServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/SanPhamDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/SanPhamDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/SanPhamDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/SanPhamDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/HinhAnh_SP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/HinhAnh_SP.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/KhachHang.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/KhachHang.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/blank.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/blank.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/category.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/category.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/checkout.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/checkout.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/feedback.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/feedback.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/product.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/product.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/productviewed.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/productviewed.jsp" afterDir="false" />
-    </list>
+    <list default="true" id="349ca238-552d-44c9-88ee-232b24cd7942" name="Default Changelist" comment="commit lan 2" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -308,6 +263,12 @@
               <item name="webbandienthoai" type="462c0819:PsiDirectoryNode" />
               <item name="web" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="webbandienthoai" type="b2602c69:ProjectViewProjectNode" />
+              <item name="webbandienthoai" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="img" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -484,9 +445,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.8059441" weight="0.5604396" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.8059441" visible="true" weight="0.17776097" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Web" order="2" sideWeight="0.19405594" side_tool="true" weight="0.4568289" />
       <window_info id="Learn" order="3" />
@@ -505,7 +465,7 @@
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.32526475" side_tool="true" weight="0.7528642" />
       <window_info anchor="bottom" id="Version Control" order="11" weight="0.3289689" />
       <window_info anchor="bottom" id="Java Enterprise" order="12" sideWeight="0.49924356" weight="0.3289689" />
-      <window_info active="true" anchor="bottom" id="Messages" order="13" sideWeight="0.49924356" visible="true" weight="0.29459903" />
+      <window_info anchor="bottom" id="Messages" order="13" sideWeight="0.49924356" visible="true" weight="0.29459903" />
       <window_info anchor="bottom" id="Database Console" order="14" sideWeight="0.49924356" weight="0.3289689" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
