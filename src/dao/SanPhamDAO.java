@@ -34,6 +34,14 @@ public interface SanPhamDAO {
     //lay danh sach san pham theo hang san xuat
     public ArrayList<SanPham> getListSPTheoHangSX(String hangSX);
 
+    //tim kiem san pham
+    public ArrayList<SanPham> getListSPTimKiem (String tenSP);
+
+    //tim san pham theo gia ban
+    public ArrayList<SanPham> getListSPTheoGiaBan (double min, double max, String hangSX);
+
+
+
 
 
 }

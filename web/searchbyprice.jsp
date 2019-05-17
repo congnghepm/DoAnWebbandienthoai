@@ -1,14 +1,20 @@
-<%--
+<%@ page import="dao.SanPhamDAOImpl" %>
+<%@ page import="model.SanPham" %>
+<%@ page import="model.KhuyenMai" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.text.DecimalFormat" %>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %><%--
   Created by IntelliJ IDEA.
   User: Kim Dung
-  Date: 5/10/2019
-  Time: 2:26 PM
+  Date: 5/14/2019
+  Time: 11:00 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>ProductViewed</title>
+    <title>SearchByPrice</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -45,21 +51,28 @@
 
         }
     </script>
-
     <script>
         function myFunction() {
             var span = document.getElementById("ndtimkiem");
 
             if(span.value == "")
             {
-                alert("Bạn chưa nhập từ khóa tìm kiếm!");
+                alert("Bạn chưa nhập từ khóa tìm kiếm!!");
             }
 
         }
     </script>
-
 </head>
 <body>
+
+<%
+    SanPhamDAOImpl spDAOImpl = new SanPhamDAOImpl();
+    double min = Double.parseDouble(request.getParameter("min"));
+    double max = Double.parseDouble(request.getParameter("max"));
+    String hangSX = request.getParameter("hangSX");
+    ArrayList<SanPham> dsSPTheoGiaBan = spDAOImpl.getListSPTheoGiaBan(min, max, hangSX);
+%>
+
 <!-- HEADER -->
 <header>
     <!-- TOP HEADER -->
@@ -94,7 +107,7 @@
                 <!-- SEARCH BAR -->
                 <div class="col-md-6">
                     <div class="header-search">
-                        <form action="SanPhamServlet" method="get" name="Search" id="FormSearch" method="get">
+                        <form action="SanPhamServlet" method="get" name="Search" id="FormSearch">
 
                             <input class="input" name="ndtimkiem" id="ndtimkiem" placeholder="Nhập thông tin tìm kiếm" onkeyup="check()">
                             <button onclick="myFunction()" type="submit" class="search-btn" disabled id="search">Tìm kiếm</button>
@@ -173,21 +186,24 @@
 <!-- /NAVIGATION -->
 
 
-<!-- container -->
+
 <div class="container">
-    <!-- row -->
-    <div class="row">
-        <div class="col-md-12">
-            <div class="newsletter">
-                <p style="margin-top: 10px;"><strong>SẢN PHẨM VỪA XEM</strong></p>
+    <!-- responsive-nav -->
 
+    <h4 style="margin-top: 30px">Số sản phẩm tìm thấy phù hợp: <span style="color: #843534"><%=dsSPTheoGiaBan.size()%></span> sản phẩm</h4>
 
-            </div>
-        </div>
+    <div id="responsive-nav1">
+
+        <ul class="main-nav nav navbar-nav">
+            <li><a href="searchbyprice.jsp?min=2000000&max=4000000&hangSX=<%=request.getParameter("hangSX")%>">Từ 2 đến 4 triệu</a></li>
+            <li><a href="searchbyprice.jsp?min=4000000&max=6000000&hangSX=<%=request.getParameter("hangSX")%>">Từ 4 đến 6 triệu</a></li>
+            <li><a href="searchbyprice.jsp?min=6000000&max=8000000&hangSX=<%=request.getParameter("hangSX")%>">Từ 6 đến 8 triệu</a></li>
+            <li><a href="searchbyprice.jsp?min=8000000&max=10000000&hangSX=<%=request.getParameter("hangSX")%>">Từ 8 đến 10 triệu</a></li>
+            <li><a href="searchbyprice.jsp?min=10000000&max=30000000&hangSX=<%=request.getParameter("hangSX")%>">Trên 10 triệu</a></li>
+        </ul>
     </div>
-    <!-- /row -->
+    <!-- /responsive-nav -->
 </div>
-<!-- /container -->
 
 
 
@@ -198,149 +214,63 @@
         <!-- row -->
         <div class="row">
 
-
             <!-- Products tab & slick -->
             <div class="col-md-12">
+
                 <div class="row">
-                    <div class="products-tabs">
-                        <!-- tab -->
-                        <div id="tab1" class="tab-pane active">
-                            <div class="products-slick" data-nav="#slick-nav-1">
-                                <!-- product -->
-                                <div class="product">
-                                    <div class="product-img">
-                                        <img src="./img/product01.jpg" alt="">
-                                        <div class="product-label">
-                                            <!-- <span class="sale">-30%</span> -->
-                                            <span class="new">NEW</span>
-                                        </div>
-                                    </div>
-                                    <div class="product-body">
 
-                                        <h3 class="product-name"><a href="#">Samsung Galaxy S10 Plus</a></h3>
-                                        <h4 class="product-price">22.990.000 ₫<del class="product-old-price"></del></h4>
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
+                    <!-- product -->
+                    <%
 
-                                    </div>
-                                    <div class="add-to-cart">
-                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+
+                        for(int i=0;i<dsSPTheoGiaBan.size();i++)
+                        {
+                            KhuyenMai km = spDAOImpl.getKhuyenMai(dsSPTheoGiaBan.get(i).getMaSP());
+                            java.text.DecimalFormat df = new java.text.DecimalFormat("#.##");
+                            String formatted = df.format(km.getGiaTri());
+                    %>
+                    <a href="product.jsp?maSP=<%=dsSPTheoGiaBan.get(i).getMaSP()%>">
+                        <div class="col-md-3 col-xs-6">
+
+                            <div class="product">
+                                <div class="product-img">
+                                    <img src="ImageServlet?maSP=<%=dsSPTheoGiaBan.get(i).getMaSP() %>" alt="">
+
+                                    <div class="product-label">
+                                        <span class="sale">-<%=formatted%>%</span>
                                     </div>
                                 </div>
-                                <!-- /product -->
+                                <%
 
-                                <!-- product -->
-                                <div class="product">
-                                    <div class="product-img">
-                                        <img src="./img/product02.jpg" alt="">
-                                        <div class="product-label">
-                                            <span class="new">NEW</span>
-                                        </div>
-                                    </div>
-                                    <div class="product-body">
+                                    double a =100-(km.getGiaTri());
+                                    double b = (dsSPTheoGiaBan.get(i).getGiaBan()*100)/a;
 
-                                        <h3 class="product-name"><a href="#">Samsung J6</a></h3>
-                                        <h4 class="product-price">4.990.000 <del class="product-old-price">5.790.000</del></h4>
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
+                                %>
+                                <div class="product-body">
+                                    <p class="product-category"><%=dsSPTheoGiaBan.get(i).getHangSX()%></p>
+                                    <h3 class="product-name"><a href="product.jsp?maSP=<%=dsSPTheoGiaBan.get(i).getMaSP()%>"><%=dsSPTheoGiaBan.get(i).getTenSP()%></a></h3>
+                                    <h4 class="product-price"><%=java.text.NumberFormat.getNumberInstance(java.util.Locale.GERMANY).format(dsSPTheoGiaBan.get(i).getGiaBan())%>đ<del class="product-old-price"><%=NumberFormat.getNumberInstance(Locale.GERMANY).format(b)%>đ</del></h4>
+                                    <div class="product-rating">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-o"></i>
+                                    </div>
 
-                                    </div>
-                                    <div class="add-to-cart">
-                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                                    </div>
                                 </div>
-                                <!-- /product -->
-
-                                <!-- product -->
-                                <div class="product">
-                                    <div class="product-img">
-                                        <img src="./img/product01.jpg" alt="">
-                                        <div class="product-label">
-                                            <span class="sale">-30%</span>
-                                        </div>
-                                    </div>
-                                    <div class="product-body">
-
-                                        <h3 class="product-name">Samsung Galaxy M20<a href="#"></a></h3>
-                                        <h4 class="product-price">4.490.000 ₫ <del class="product-old-price"></del></h4>
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-
-                                    </div>
-                                    <div class="add-to-cart">
-                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                                    </div>
+                                <div class="add-to-cart">
+                                    <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
                                 </div>
-                                <!-- /product -->
-
-                                <!-- product -->
-                                <div class="product">
-                                    <div class="product-img">
-                                        <img src="./img/product02.jpg" alt="">
-                                    </div>
-                                    <div class="product-body">
-
-                                        <h3 class="product-name"><a href="#">Samsung J6</a></h3>
-                                        <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-
-                                    </div>
-                                    <div class="add-to-cart">
-                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                                    </div>
-                                </div>
-                                <!-- /product -->
-
-                                <!-- product -->
-                                <div class="product">
-                                    <div class="product-img">
-                                        <img src="./img/product05.png" alt="">
-                                    </div>
-                                    <div class="product-body">
-
-                                        <h3 class="product-name"><a href="#">Samsung J8</a></h3>
-                                        <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-
-                                    </div>
-                                    <div class="add-to-cart">
-                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                                    </div>
-                                </div>
-                                <!-- /product -->
                             </div>
-                            <div id="slick-nav-1" class="products-slick-nav"></div>
+
                         </div>
-                        <!-- /tab -->
-                    </div>
+                    </a>
+                    <%
+                        }
+                    %>
                 </div>
+
             </div>
             <!-- Products tab & slick -->
         </div>
@@ -349,7 +279,6 @@
     <!-- /container -->
 </div>
 <!-- /SECTION -->
-
 
 <!-- NEWSLETTER -->
 <div id="newsletter" class="section">
@@ -436,13 +365,10 @@
                 <div class="col-md-3 col-xs-6">
                     <div class="footer">
                         <h3 class="footer-title">Dịch vụ</h3>
-                        <ul class="footer-links">
-                            <li><a href="feedback.jsp">Để lại góp ý</a></li>
-
-                            <li><a href="blank.jsp">Xem giỏ hàng</a></li>
-                            <li><a href="checkout.jsp">Đơn hàng</a></li>
-                            <li><a href="#">Giúp đỡ</a></li>
-                        </ul>
+                        <li><a href="feedback.jsp">Để lại góp ý</a></li>
+                        <li><a href="blank.jsp">Xem giỏ hàng</a></li>
+                        <li><a href="checkout.jsp">Đơn hàng</a></li>
+                        <li><a href="#">Giúp đỡ</a></li>
                     </div>
                 </div>
             </div>

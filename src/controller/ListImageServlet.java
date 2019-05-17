@@ -16,7 +16,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "ListImageServlet")
+@WebServlet("/ListImageServlet")
 public class ListImageServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -24,7 +24,7 @@ public class ListImageServlet extends HttpServlet {
         String masp=request.getParameter("maSP");
         System.out.println("load hinh anh "+masp);
         byte[] img = null;
-        ArrayList<byte[]> arrays = new ArrayList<byte[]>();
+        List<byte[]> arrays = new ArrayList<>();
         ServletOutputStream sos = null;
         String sql = "select FileHA from hinhanh_sp where MaSP='"+masp+"'";
         try

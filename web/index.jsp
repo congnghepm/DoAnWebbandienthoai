@@ -16,6 +16,7 @@
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="model.KhuyenMai" %>
 <%@ page import="dao.SanPhamDAOImpl" %>
+<%@ page import="model.Cart" %>
 <html>
   <head>
     <title>Index</title>
@@ -43,8 +44,45 @@
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="css/style.css"/>
 
+    <script>
+      function check() {
+        var ndtimkiem = document.getElementById("ndtimkiem");
+
+        if(ndtimkiem.value!="")
+        {
+          var x = document.getElementById("search");
+          x.removeAttribute("disabled");
+        }
+
+      }
+    </script>
+
+    <script>
+      function myFunction() {
+        var span = document.getElementById("ndtimkiem");
+
+        if(span.value == "")
+        {
+            alert("Bạn chưa nhập từ khóa tìm kiếm!");
+        }
+
+      }
+    </script>
+
   </head>
   <body>
+
+  <%
+    SanPhamDAOImpl spDAOImpl = new SanPhamDAOImpl();
+    ArrayList<SanPham> dsSPTieuBieu = spDAOImpl.getListSanPhamKMHot();
+    ArrayList<SanPham> dsSPBanChay = spDAOImpl.getListSanPhamBanChay();
+    Cart cart = (Cart) session.getAttribute("cart");
+    if(cart==null)
+    {
+      cart = new Cart();
+      session.setAttribute("cart", cart);
+    }
+  %>
 
 
   <!-- HEADER -->
@@ -83,10 +121,10 @@
           <!-- SEARCH BAR -->
           <div class="col-md-6">
             <div class="header-search">
-              <form>
+              <form action="SanPhamServlet" method="get" name="Search" id="FormSearch" method="get">
 
-                <input class="input" placeholder="Nhập thông tin tìm kiếm">
-                <button class="search-btn">Tìm kiếm</button>
+                <input class="input" name="ndtimkiem" id="ndtimkiem" placeholder="Nhập thông tin tìm kiếm" onkeyup="check()">
+                <button onclick="myFunction()" type="submit" class="search-btn" id="search" disabled>Tìm kiếm</button>
               </form>
             </div>
           </div>
@@ -106,12 +144,13 @@
               <!-- /Wishlist -->
 
               <!-- Cart -->
-              <div class="dropdown">
-                <a href="blank.jsp" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+              <div>
+                <a href="blank.jsp">
                   <i class="fa fa-shopping-cart"></i>
                   <span>Giỏ hàng</span>
                   <div class="qty">3</div>
                 </a>
+
               </div>
               <!-- /Cart -->
               <!-- Menu Toogle -->
@@ -186,7 +225,7 @@
               <img src="./img/shop02.jpg" alt="" style="height: 240px">
             </div>
             <div class="shop-body">
-              <h3>Sản phẩm<br>mới ra mắt</h3>
+              <h3>Sản phẩm<br>giá tốt</h3>
               <a href="#" class="cta-btn">Xem thêm <i class="fa fa-arrow-circle-right"></i></a>
             </div>
           </div>
@@ -240,8 +279,7 @@
 
             <!-- product -->
             <%
-              SanPhamDAOImpl spDAOImpl = new SanPhamDAOImpl();
-              ArrayList<SanPham> dsSPTieuBieu = spDAOImpl.getListSanPhamKMHot();
+
 
               for(int i=0;i<4;i++)
               {
@@ -251,7 +289,6 @@
             %>
             <a href="product.jsp?maSP=<%=dsSPTieuBieu.get(i).getMaSP()%>">
             <div class="col-md-3 col-xs-6">
-
               <div class="product">
                 <div class="product-img">
                   <img src="ImageServlet?maSP=<%=dsSPTieuBieu.get(i).getMaSP() %>" alt="">
@@ -262,10 +299,11 @@
                 </div>
                 <%
 
-                  double a =100-(km.getGiaTri());
-                  double b = (dsSPTieuBieu.get(i).getGiaBan()*100)/a;
+                    double a =100-(km.getGiaTri());
+                    double b = (dsSPTieuBieu.get(i).getGiaBan()*100)/a;
 
                 %>
+
                 <div class="product-body">
                   <p class="product-category"><%=dsSPTieuBieu.get(i).getHangSX()%></p>
                   <h3 class="product-name"><a href="product.jsp?maSP=<%=dsSPTieuBieu.get(i).getMaSP()%>"><%=dsSPTieuBieu.get(i).getTenSP()%></a></h3>
@@ -280,7 +318,7 @@
 
                 </div>
                 <div class="add-to-cart">
-                  <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                  <a href="CartServlet?command=plus&maSP=<%=dsSPTieuBieu.get(i).getMaSP()%>"><button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button></a>
                 </div>
               </div>
 
@@ -289,67 +327,7 @@
             <%
               }
             %>
-            <%--<div class="products-tabs">
-              <!-- tab -->
-              <div id="tab1" class="tab-pane active">
-                <div class="products-slick" data-nav="#slick-nav-1">
-                    <%
-                        SanPhamDAOImpl spDAOImpl = new SanPhamDAOImpl();
-                        ArrayList<SanPham> dsSPTieuBieu = spDAOImpl.getListSanPhamKMHot();
-                        ArrayList<KhuyenMai> dsKM = spDAOImpl.getListKM();
 
-
-                        for(int i=0;i<6;i++)
-                        {
-                          KhuyenMai km = spDAOImpl.getKhuyenMai(dsSPTieuBieu.get(i).getMaSP());
-                          DecimalFormat df = new DecimalFormat("#.##");
-                          String formatted = df.format(km.getGiaTri());
-                    %>
-                  <!-- product -->
-
-                  <div class="product">
-                    <a href="product.jsp?maSP=<%=dsSPTieuBieu.get(i).getMaSP()%>">
-                    <div class="product-img">
-                      <img src="ImageServlet?maSP=<%=dsSPTieuBieu.get(i).getMaSP() %>" alt="">
-                      <div class="product-label">
-                        <span class="sale">-<%=formatted%>%</span>
-                        <span class="new">NEW</span>
-                      </div>
-                    </div>
-                    <%
-
-                        double a =100-(dsKM.get(i).getGiaTri());
-                        double b = (dsSPTieuBieu.get(i).getGiaBan()*100)/a;
-
-                    %>
-                    <div class="product-body">
-                      <h3 class="product-name"><%=dsSPTieuBieu.get(i).getTenSP()%></h3>
-                      <h4 class="product-price"><%=NumberFormat.getNumberInstance(Locale.GERMANY).format(dsSPTieuBieu.get(i).getGiaBan())%>đ<del class="product-old-price"><%=NumberFormat.getNumberInstance(Locale.GERMANY).format(b)%></del>đ</h4>
-                      <div class="product-rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                      </div>
-
-                    </div>
-                    <div class="add-to-cart">
-                      <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                    </div>
-
-                    </a>
-                  </div>
-
-                    <%
-                        }
-                    %>
-
-                </div>
-                <div id="slick-nav-1" class="products-slick-nav"></div>
-              </div>
-              <!-- /tab -->
-            </div>--%>
           </div>
         </div>
         <!-- Products tab & slick -->
@@ -390,7 +368,7 @@
 
               <!-- product -->
               <%
-                ArrayList<SanPham> dsSPBanChay = spDAOImpl.getListSanPhamBanChay();
+
                 for (int j=0;j<4;j++)
                 {
                   KhuyenMai km = spDAOImpl.getKhuyenMai(dsSPBanChay.get(j).getMaSP());
@@ -427,7 +405,7 @@
 
                   </div>
                   <div class="add-to-cart">
-                    <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                    <a href="CartServlet?command=plus&maSP=<%=dsSPBanChay.get(j).getMaSP()%>"><button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button></a>
                   </div>
                 </div>
 
@@ -436,6 +414,7 @@
               <%
                 }
               %>
+          </div>
           </div>
         </div>
         <!-- /Products tab & slick -->
@@ -573,6 +552,7 @@
       </div>
       <!-- /container -->
     </div>
+
     <!-- /bottom footer -->
   </footer>
   <!-- /FOOTER -->

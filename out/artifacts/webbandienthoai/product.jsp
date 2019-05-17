@@ -14,6 +14,8 @@
 <%@ page import="model.KhuyenMai" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.text.DecimalFormat" %>
+<%@page import="controller.SanPhamServlet" %>
+<%@ page import="model.Cart" %>
 <html>
 <head>
     <title>Product</title>
@@ -40,16 +42,51 @@
 
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="css/style.css"/>
+    <script>
+        function check() {
+            var ndtimkiem = document.getElementById("ndtimkiem");
+
+            if(ndtimkiem.value!="")
+            {
+                var x = document.getElementById("search");
+                x.removeAttribute("disabled");
+            }
+
+        }
+    </script>
+
+    <script>
+        function myFunction() {
+            var span = document.getElementById("ndtimkiem");
+
+            if(span.value == "")
+            {
+                alert("Bạn chưa nhập từ khóa tìm kiếm!");
+            }
+
+        }
+    </script>
+
+
 </head>
 <body>
 
 <%
     SanPhamDAOImpl spDAOImpl = new SanPhamDAOImpl();
     int maSP = (Integer.parseInt(request.getParameter("maSP")));
+    ArrayList<Integer> listMaSP = new ArrayList<>();
     SanPham sp = spDAOImpl.getSP(maSP);
     ThongSoKyThuat tskt = spDAOImpl.getThongSoKyThuat(maSP);
     KhuyenMai km = spDAOImpl.getKhuyenMai(maSP);
     ArrayList<SanPham> dsSP = spDAOImpl.getListSanPham();
+
+    Cart cart = (Cart) session.getAttribute("cart");
+    if(cart==null)
+    {
+        cart = new Cart();
+        session.setAttribute("cart", cart);
+    }
+
 %>
 
 <!-- HEADER -->
@@ -86,10 +123,10 @@
                 <!-- SEARCH BAR -->
                 <div class="col-md-6">
                     <div class="header-search">
-                        <form>
+                        <form action="SanPhamServlet" method="get" name="Search" id="FormSearch" method="get">
 
-                            <input class="input" placeholder="Nhập thông tin tìm kiếm">
-                            <button class="search-btn">Tìm kiếm</button>
+                            <input class="input" name="ndtimkiem" id="ndtimkiem" placeholder="Nhập thông tin tìm kiếm"value="" onkeyup="check()">
+                            <button onclick="myFunction()" type="submit" class="search-btn" disabled id="search">Tìm kiếm</button>
                         </form>
                     </div>
                 </div>
@@ -109,14 +146,15 @@
                         <!-- /Wishlist -->
 
                         <!-- Cart -->
-                        <div class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                        <div>
+                            <a href="blank.jsp">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>Giỏ hàng</span>
                                 <div class="qty">3</div>
                             </a>
 
                         </div>
+
                         <!-- /Cart -->
 
                         <!-- Menu Toogle -->
@@ -193,29 +231,7 @@
             <div class="col-md-5 col-md-push-2">
                 <div id="product-main-img">
 
-                    <div class="product-preview">
-                        <img src="ImageServlet?maSP=<%=sp.getMaSP() %>" alt="">
-                    </div>
-
-                    <div class="product-preview">
-                        <img src="ImageServlet?maSP=<%=sp.getMaSP() %>" alt="">
-                    </div>
-
-                    <div class="product-preview">
-                        <img src="ImageServlet?maSP=<%=sp.getMaSP() %>" alt="">
-                    </div>
-
-                    <div class="product-preview">
-                        <img src="ImageServlet?maSP=<%=sp.getMaSP() %>" alt="">
-                    </div>
-                </div>
-            </div>
-            <!-- /Product main img -->
-
-            <!-- Product thumb imgs -->
-            <div class="col-md-2  col-md-pull-5">
-                <div id="product-imgs">
-                    <%--<%
+                    <%
                         for (int t =0 ;t<4;t++)
                         {
                     %>
@@ -224,9 +240,42 @@
                     </div>
                     <%
                         }
-                    %>--%>
+                    %>
+
+                    <%--<div class="product-preview">
+                        <img src="ImageServlet?maSP=<%=sp.getMaSP() %>" alt="">
+                    </div>
 
                     <div class="product-preview">
+                        <img src="ImageServlet?maSP=<%=sp.getMaSP() %>" alt="">
+                    </div>
+
+                    <div class="product-preview">
+                        <img src="ImageServlet?maSP=<%=sp.getMaSP() %>" alt="">
+                    </div>
+
+                    <div class="product-preview">
+                        <img src="ImageServlet?maSP=<%=sp.getMaSP() %>" alt="">
+                    </div>--%>
+                </div>
+            </div>
+            <!-- /Product main img -->
+
+            <!-- Product thumb imgs -->
+            <div class="col-md-2  col-md-pull-5">
+                <div id="product-imgs">
+                    <%
+                        for (int t =0 ;t<4;t++)
+                        {
+                    %>
+                    <div class="product-preview">
+                        <img src="ListImageServlet?maSP=<%=sp.getMaSP() %>" alt="">
+                    </div>
+                    <%
+                        }
+                    %>
+
+                    <%--<div class="product-preview">
                         <img src="ImageServlet?maSP=<%=sp.getMaSP() %>" alt="">
                     </div>
 
@@ -240,7 +289,7 @@
 
                     <div class="product-preview">
                         <img src="ImageServlet?maSP=<%=sp.getMaSP() %>" alt="">
-                    </div>
+                    </div>--%>
                 </div>
             </div>
             <!-- /Product thumb imgs -->
@@ -261,6 +310,7 @@
                     </div>
                     <div>
                         <%
+
                             double a =100-(km.getGiaTri());
                             double b = (sp.getGiaBan()*100)/a;
 
@@ -277,12 +327,13 @@
                     <span style="font-weight: bold">Bộ nhớ trong:</span> <%=tskt.getBoNhoTrong()%><br>
                     <span style="font-weight: bold">Dung lượng pin:</span> <%=tskt.getDungLuongPin()%>
 
+
                     <div class="add-to-cart">
                         <div class="qty-label">
                             Số lượng
                             <div class="input-number">
                                 <span class="qty-down">-</span>
-                                <input type="number" value="1">
+                                <input type="number" value="1" name="soluong" id="soluong">
                                 <span class="qty-up">+</span>
 
                             </div>
@@ -290,9 +341,10 @@
                         </div>
                     </div>
                     <div class="add-to-cart">
-                        <button class="add-to-cart-btn">Mua ngay</button>
-                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</button>
+                        <a href="checkout.jsp"><button class="add-to-cart-btn"> Mua ngay</button></a>
+                        <a href="CartServlet?command=plus&maSP=<%=sp.getMaSP()%>"><button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</button></a>
                     </div>
+
             </div>
             </div>
 
@@ -723,6 +775,15 @@
 <script src="js/nouislider.min.js"></script>
 <script src="js/jquery.zoom.min.js"></script>
 <script src="js/main.js"></script>
+
+<script>
+
+    function getSL() {
+        return document.getElementById("soluong").value;
+    }
+
+</script>
+
 
 </body>
 </html>

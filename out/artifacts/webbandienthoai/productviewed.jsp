@@ -33,6 +33,31 @@
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="css/style.css"/>
 
+    <script>
+        function check() {
+            var ndtimkiem = document.getElementById("ndtimkiem");
+
+            if(ndtimkiem.value!="")
+            {
+                var x = document.getElementById("search");
+                x.removeAttribute("disabled");
+            }
+
+        }
+    </script>
+
+    <script>
+        function myFunction() {
+            var span = document.getElementById("ndtimkiem");
+
+            if(span.value == "")
+            {
+                alert("Bạn chưa nhập từ khóa tìm kiếm!");
+            }
+
+        }
+    </script>
+
 </head>
 <body>
 <!-- HEADER -->
@@ -69,10 +94,10 @@
                 <!-- SEARCH BAR -->
                 <div class="col-md-6">
                     <div class="header-search">
-                        <form>
+                        <form action="SanPhamServlet" method="get" name="Search" id="FormSearch" method="get">
 
-                            <input class="input" placeholder="Nhập thông tin tìm kiếm">
-                            <button class="search-btn">Tìm kiếm</button>
+                            <input class="input" name="ndtimkiem" id="ndtimkiem" placeholder="Nhập thông tin tìm kiếm" onkeyup="check()">
+                            <button onclick="myFunction()" type="submit" class="search-btn" disabled id="search">Tìm kiếm</button>
                         </form>
                     </div>
                 </div>
@@ -92,8 +117,8 @@
                         <!-- /Wishlist -->
 
                         <!-- Cart -->
-                        <div class="dropdown">
-                            <a href="blank.jsp" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                        <div>
+                            <a href="blank.jsp">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>Giỏ hàng</span>
                                 <div class="qty">3</div>

@@ -267,4 +267,77 @@ public class SanPhamDAOImpl implements SanPhamDAO {
 
         return dsSPTheoHangSX;
     }
+
+    @Override
+    public ArrayList<SanPham> getListSPTimKiem(String tenSP) {
+
+        ArrayList<SanPham> dsSPTimKiem = new ArrayList<>();
+
+        try {
+            Connection conn = DBConnect.getConnect();
+            if(tenSP!="")
+            {
+                String sql = "select * from sanpham where sanpham.TenSP like '%"+tenSP+"%'";
+                PreparedStatement st = conn.prepareStatement(sql);
+                ResultSet rs = st.executeQuery();
+
+                while (rs.next())
+                {
+                    SanPham sptk = new SanPham();
+                    sptk.setMaSP(rs.getInt("MaSP"));
+                    sptk.setTenSP(rs.getString("TenSP"));
+                    sptk.setHangSX(rs.getString("HangSX"));
+                    sptk.setGiaBan(rs.getDouble("GiaBan"));
+                    sptk.setSoLuongNhap(rs.getInt("SoLuongNhap"));
+                    sptk.setGiaNhap(rs.getDouble("GiaNhap"));
+                    sptk.setSoLuongTon(rs.getInt("SoLuongTon"));
+                    sptk.setMaThongSo(rs.getInt("MaThongSo"));
+                    sptk.setMaKM(rs.getInt("MaKM"));
+                    dsSPTimKiem.add(sptk);
+
+                }
+            }
+            else {
+                System.out.println("Chua nhap thong tin");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return dsSPTimKiem;
+    }
+
+    @Override
+    public ArrayList<SanPham> getListSPTheoGiaBan(double min, double max, String hangSX) {
+
+        ArrayList<SanPham> dsSPTheoGiaBan= new ArrayList<>();
+
+        try {
+            Connection conn = DBConnect.getConnect();
+            String sql = "select * from sanpham where sanpham.GiaBan >= '"+min+"' and sanpham.GiaBan < '"+max+"' and sanpham.HangSX = '"+hangSX+"'";
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next())
+            {
+                SanPham sptk = new SanPham();
+                sptk.setMaSP(rs.getInt("MaSP"));
+                sptk.setTenSP(rs.getString("TenSP"));
+                sptk.setHangSX(rs.getString("HangSX"));
+                sptk.setGiaBan(rs.getDouble("GiaBan"));
+                sptk.setSoLuongNhap(rs.getInt("SoLuongNhap"));
+                sptk.setGiaNhap(rs.getDouble("GiaNhap"));
+                sptk.setSoLuongTon(rs.getInt("SoLuongTon"));
+                sptk.setMaThongSo(rs.getInt("MaThongSo"));
+                sptk.setMaKM(rs.getInt("MaKM"));
+                dsSPTheoGiaBan.add(sptk);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return dsSPTheoGiaBan;
+    }
 }

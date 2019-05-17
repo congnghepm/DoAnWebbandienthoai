@@ -1,4 +1,8 @@
-<%--
+<%@ page import="model.Cart" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="model.Item" %>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %><%--
   Created by IntelliJ IDEA.
   User: Kim Dung
   Date: 5/10/2019
@@ -32,9 +36,42 @@
 
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="css/style.css"/>
+
+    <script>
+        function check() {
+            var ndtimkiem = document.getElementById("ndtimkiem");
+
+            if(ndtimkiem.value!="")
+            {
+                var x = document.getElementById("search");
+                x.removeAttribute("disabled");
+            }
+
+        }
+    </script>
+
+    <script>
+        function myFunction() {
+            var span = document.getElementById("ndtimkiem");
+
+            if(span.value == "")
+            {
+                alert("Bạn chưa nhập từ khóa tìm kiếm!");
+            }
+
+        }
+    </script>
 </head>
 <body>
 
+<%
+    Cart cart = (Cart) session.getAttribute("cart");
+    if(cart ==null)
+    {
+        cart = new Cart();
+        session.setAttribute("cart", cart);
+    }
+%>
 <!-- HEADER -->
 <header>
     <!-- TOP HEADER -->
@@ -59,7 +96,7 @@
                 <!-- LOGO -->
                 <div class="col-md-3">
                     <div class="header-logo">
-                        <a href="#" class="logo">
+                        <a href="index.jsp" class="logo">
                             <img src="./img/logo.png" alt="" style="margin-left: -50px">
                         </a>
                     </div>
@@ -69,10 +106,10 @@
                 <!-- SEARCH BAR -->
                 <div class="col-md-6">
                     <div class="header-search">
-                        <form>
+                        <form action="SanPhamServlet" method="get" name="Search" id="FormSearch" method="get">
 
-                            <input class="input" placeholder="Nhập thông tin tìm kiếm">
-                            <button class="search-btn">Tìm kiếm</button>
+                            <input class="input" name="ndtimkiem" id="ndtimkiem" placeholder="Nhập thông tin tìm kiếm" onkeyup="check()">
+                            <button onclick="myFunction()" type="submit" class="search-btn" disabled id="search">Tìm kiếm</button>
                         </form>
                     </div>
                 </div>
@@ -92,8 +129,8 @@
                         <!-- /Wishlist -->
 
                         <!-- Cart -->
-                        <div class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                        <div>
+                            <a href="blank.jsp">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>Giỏ hàng</span>
                                 <div class="qty">3</div>
@@ -163,6 +200,7 @@
             <!-- /section title -->
 
             <div class="container">
+
                 <table id="cart" class="table table-hover table-condensed">
                     <thead>
                     <tr>
@@ -173,43 +211,29 @@
                         <th style="width:10%"> </th>
                     </tr>
                     </thead>
-                    <tbody><tr>
-                        <td data-th="Product">
-                            <div class="row">
-                                <div class="col-sm-2 hidden-xs"><img src="./img/product01.jpg" alt="Sản phẩm 1" class="img-responsive" width="100">
-                                </div>
-                                <div class="col-sm-10">
-                                    <h4 class="nomargin">Philip S326</h4>
-
-                                </div>
-                            </div>
-                        </td>
-                        <td data-th="Price">$980.00 </td>
-                        <td data-th="Quantity"><input class="form-control text-center" value="1" type="number">
-                        </td>
-                        <td data-th="Subtotal" class="text-center">$980.00 </td>
-                        <td class="actions" data-th="">
-                            <button class="btn btn-info btn-sm"><i class="fa fa-edit"></i>
-                            </button>
-                            <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i>
-                            </button>
-                        </td>
-                    </tr>
+                    <tbody>
+                    <%for (Map.Entry<Integer, Item> list: cart.getCartItems().entrySet()){%>
                     <tr>
+
                         <td data-th="Product">
                             <div class="row">
-                                <div class="col-sm-2 hidden-xs"><img src="./img/product02.jpg" alt="Sản phẩm 1" class="img-responsive" width="100">
+                                <div class="col-sm-2 hidden-xs"><img src="ImageServlet?maSP=<%=list.getValue().getSanPham().getMaSP()%>" alt="Sản phẩm 1" class="img-responsive" width="100">
                                 </div>
                                 <div class="col-sm-10">
-                                    <h4 class="nomargin">Samsung Galaxy J6</h4>
+                                    <h4 class="nomargin"><%=list.getValue().getSanPham().getTenSP()%></h4>
 
                                 </div>
                             </div>
                         </td>
-                        <td data-th="Price">$980.00 </td>
-                        <td data-th="Quantity"><input class="form-control text-center" value="1" type="number">
+                        <td data-th="Price"><%=java.text.NumberFormat.getNumberInstance(java.util.Locale.GERMANY).format(list.getValue().getSanPham().getGiaBan())%>đ </td>
+                        <td data-th="Quantity"><input class="form-control text-center" value="<%=list.getValue().getQuantity()%>" type="number">
                         </td>
-                        <td data-th="Subtotal" class="text-center">$980.00 </td>
+                        <%
+                            double giaban = list.getValue().getSanPham().getGiaBan();
+                            int sl = list.getValue().getQuantity();
+                            double tongtien = giaban*sl;
+                        %>
+                        <td data-th="Subtotal" class="text-center"><%= java.text.NumberFormat.getNumberInstance(java.util.Locale.GERMANY).format(tongtien)%>đ</td>
                         <td class="actions" data-th="">
                             <button class="btn btn-info btn-sm"><i class="fa fa-edit"></i>
                             </button>
@@ -217,22 +241,25 @@
                             </button>
                         </td>
                     </tr>
+                    <%}%>
+
                     </tbody><tfoot>
                 <tr class="visible-xs">
                     <td class="text-center"><strong>Tổng 200.000 đ</strong>
                     </td>
                 </tr>
                 <tr>
-                    <td><a href="http://hocwebgiare.com/" class="btn btn-warning"><i class="fa fa-angle-left"></i> Tiếp tục mua hàng</a>
+                    <td><a href="index.jsp" class="btn btn-warning"><i class="fa fa-angle-left"></i> Tiếp tục mua hàng</a>
                     </td>
                     <td colspan="2" class="hidden-xs"> </td>
-                    <td class="hidden-xs text-center"><strong>Tổng tiền $1960.00  </strong>
+                    <td class="hidden-xs text-center"><strong>Tổng tiền <%=NumberFormat.getNumberInstance(Locale.GERMANY).format(cart.totalCart())%>đ</strong>
                     </td>
-                    <td><a href="http://hocwebgiare.com/" class="btn btn-success btn-block">Thanh toán <i class="fa fa-angle-right"></i></a>
+                    <td><a href="checkout.jsp" class="btn btn-success btn-block">Thanh toán <i class="fa fa-angle-right"></i></a>
                     </td>
                 </tr>
                 </tfoot>
                 </table>
+
             </div>
         </div>
         <!-- /row -->

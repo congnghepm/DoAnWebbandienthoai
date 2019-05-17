@@ -38,6 +38,29 @@
 
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="css/style.css"/>
+    <script>
+        function check() {
+            var ndtimkiem = document.getElementById("ndtimkiem");
+
+            if(ndtimkiem.value!="")
+            {
+                var x = document.getElementById("search");
+                x.removeAttribute("disabled");
+            }
+
+        }
+    </script>
+    <script>
+        function myFunction() {
+            var span = document.getElementById("ndtimkiem");
+
+            if(span.value == "")
+            {
+                alert("Bạn chưa nhập từ khóa tìm kiếm!!");
+            }
+
+        }
+    </script>
 </head>
 <body>
 
@@ -75,10 +98,10 @@
                 <!-- SEARCH BAR -->
                 <div class="col-md-6">
                     <div class="header-search">
-                        <form>
+                        <form action="SanPhamServlet" method="get" name="Search" id="FormSearch">
 
-                            <input class="input" placeholder="Nhập thông tin tìm kiếm">
-                            <button class="search-btn">Tìm kiếm</button>
+                            <input class="input" name="ndtimkiem" id="ndtimkiem" placeholder="Nhập thông tin tìm kiếm" onkeyup="check()">
+                            <button onclick="myFunction()" type="submit" class="search-btn" disabled id="search">Tìm kiếm</button>
                         </form>
                     </div>
                 </div>
@@ -98,8 +121,8 @@
                         <!-- /Wishlist -->
 
                         <!-- Cart -->
-                        <div class="dropdown">
-                            <a href="blank.jsp" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                        <div>
+                            <a href="blank.jsp">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>Giỏ hàng</span>
                                 <div class="qty">3</div>
@@ -161,12 +184,11 @@
     <div id="responsive-nav1">
 
         <ul class="main-nav nav navbar-nav">
-            Chọn mức giá:
-            <li><a href="#">Từ 4 đến 5 triệu</a></li>
-            <li><a href="#">Từ 5 đến 6 triệu</a></li>
-            <li><a href="#">Từ 7 đến 8 triệu</a></li>
-            <li><a href="#">Từ 8 đến 9 triệu</a></li>
-            <li><a href="#">Trên 10 triệu</a></li>
+            <li><a href="searchbyprice.jsp?min=2000000&max=4000000&hangSX=<%=request.getParameter("hangSX")%>">Từ 2 đến 4 triệu</a></li>
+            <li><a href="searchbyprice.jsp?min=4000000&max=6000000&hangSX=<%=request.getParameter("hangSX")%>">Từ 4 đến 6 triệu</a></li>
+            <li><a href="searchbyprice.jsp?min=6000000&max=8000000&hangSX=<%=request.getParameter("hangSX")%>">Từ 6 đến 8 triệu</a></li>
+            <li><a href="searchbyprice.jsp?min=8000000&max=10000000&hangSX=<%=request.getParameter("hangSX")%>">Từ 8 đến 10 triệu</a></li>
+            <li><a href="searchbyprice.jsp?min=10000000&max=30000000&hangSX=<%=request.getParameter("hangSX")%>">Trên 10 triệu</a></li>
         </ul>
     </div>
     <!-- /responsive-nav -->
@@ -189,7 +211,8 @@
                     <!-- product -->
                     <%
                         SanPhamDAOImpl spDAOImpl = new SanPhamDAOImpl();
-                        ArrayList<SanPham> dsSPTheoHangSX = spDAOImpl.getListSPTheoHangSX(request.getParameter("hangSX"));
+                        String hangSX = request.getParameter("hangSX");
+                        ArrayList<SanPham> dsSPTheoHangSX = spDAOImpl.getListSPTheoHangSX(hangSX);
 
                         for(int i=0;i<dsSPTheoHangSX.size();i++)
                         {
@@ -239,100 +262,6 @@
                     %>
                 </div>
 
-
-                <%--<div class="product">
-                    <%
-                        SanPhamDAOImpl spDAOImpl = new SanPhamDAOImpl();
-                        ArrayList<SanPham> dsSPTheoHangSX = spDAOImpl.getListSPTheoHangSX(request.getParameter("hangSX"));
-                        for (int i=0;i< dsSPTheoHangSX.size();i++)
-                        {
-                    %>
-                    <div class="product-img">
-                        <img src="ImageServlet?maSP=<%=dsSPTheoHangSX.get(i).getMaSP() %>" alt="">
-
-                        <div class="product-label">
-                            <span class="sale">-<%=2334%>%</span>
-                        </div>
-                    </div>
-                    <div class="product-body">
-                        <p class="product-category"><%=dsSPTheoHangSX.get(i).getHangSX()%></p>
-                        <h3 class="product-name"><a href="#"><%=dsSPTheoHangSX.get(i).getTenSP()%></a></h3>
-                        <h4 class="product-price"><%=java.text.NumberFormat.getNumberInstance(Locale.GERMANY).format(dsSPTheoHangSX.get(i).getGiaBan())%>đ<del class="product-old-price"><%=NumberFormat.getNumberInstance(Locale.GERMANY).format(123)%>đ</del></h4>
-                        <div class="product-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star-o"></i>
-                        </div>
-
-                    </div>
-                    <div class="add-to-cart">
-                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                    </div>
-                    <%
-                        }
-                    %>
-                </div>--%>
-
-
-
-
-            <%--<div class="row">
-                    <div class="products-tabs">
-                        <!-- tab -->
-                        <div id="tab1" class="tab-pane active">
-
-                            <div class="products-slick" data-nav="#slick-nav-1">
-                                <%
-                                    SanPhamDAOImpl spDAOImpl = new SanPhamDAOImpl();
-                                    ArrayList<SanPham> dsSPTheoHangSX = spDAOImpl.getListSPTheoHangSX(request.getParameter("hangSX"));
-                                    for (int i=0;i< dsSPTheoHangSX.size();i++)
-                                    {
-                                %>
-                                <!-- product -->
-
-                                <div class="product">
-
-                                    <div class="product-img">
-                                        <img src="ImageServlet?maSP=<%=dsSPTheoHangSX.get(i).getMaSP() %>" alt="">
-                                        <div class="product-label">
-                                            <!-- <span class="sale">-30%</span> -->
-                                            <span class="new">NEW</span>
-                                        </div>
-                                    </div>
-                                    <div class="product-body">
-
-                                        <h3 class="product-name"><a href="#"><%=dsSPTheoHangSX.get(i).getTenSP()%></a></h3>
-                                        <h4 class="product-price"><%=dsSPTheoHangSX.get(i).getGiaBan()%><del class="product-old-price"></del></h4>
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-
-                                    </div>
-                                    <div class="add-to-cart">
-                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                                    </div>
-
-                                </div>
-
-                                <!-- /product -->
-                                <%
-                                    }
-                                %>
-
-                            </div>
-
-
-                            <div id="slick-nav-1" class="products-slick-nav"></div>
-                        </div>
-                        <!-- /tab -->
-                    </div>
-                </div>--%>
             </div>
             <!-- Products tab & slick -->
         </div>
