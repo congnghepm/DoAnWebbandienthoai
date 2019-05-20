@@ -11,7 +11,8 @@ public class DBConnect {
         Connection conn = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webdienthoai", "root", "dungkim");
+            String url = "jdbc:mysql://localhost:3306/webdienthoai?autoReconnect=true&useSSL=false";
+            conn = DriverManager.getConnection(url, "root", "dungkim");
 
 
             System.out.println("Ket noi thanh cong");

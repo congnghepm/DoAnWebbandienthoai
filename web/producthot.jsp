@@ -1,20 +1,20 @@
 <%@ page import="dao.SanPhamDAOImpl" %>
 <%@ page import="model.SanPham" %>
-<%@ page import="model.KhuyenMai" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="model.KhuyenMai" %>
 <%@ page import="java.text.DecimalFormat" %>
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.util.Locale" %><%--
   Created by IntelliJ IDEA.
   User: Kim Dung
-  Date: 5/14/2019
-  Time: 11:00 PM
+  Date: 5/20/2019
+  Time: 9:32 AM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>SearchByPrice</title>
+    <title>Product Hot</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -51,26 +51,26 @@
 
         }
     </script>
+
     <script>
         function myFunction() {
             var span = document.getElementById("ndtimkiem");
 
             if(span.value == "")
             {
-                alert("Bạn chưa nhập từ khóa tìm kiếm!!");
+                alert("Bạn chưa nhập từ khóa tìm kiếm!");
             }
 
         }
     </script>
+
 </head>
 <body>
 
 <%
+
     SanPhamDAOImpl spDAOImpl = new SanPhamDAOImpl();
-    double min = Double.parseDouble(request.getParameter("min"));
-    double max = Double.parseDouble(request.getParameter("max"));
-    String hangSX = request.getParameter("hangSX");
-    ArrayList<SanPham> dsSPTheoGiaBan = spDAOImpl.getListSPTheoGiaBan(min, max, hangSX);
+    ArrayList<SanPham> dsSPBanChay = spDAOImpl.getListSanPhamBanChay();
 %>
 
 <!-- HEADER -->
@@ -107,7 +107,7 @@
                 <!-- SEARCH BAR -->
                 <div class="col-md-6">
                     <div class="header-search">
-                        <form action="SanPhamServlet" method="get" name="Search" id="FormSearch">
+                        <form action="SanPhamServlet" method="get" name="Search" id="FormSearch" method="get">
 
                             <input class="input" name="ndtimkiem" id="ndtimkiem" placeholder="Nhập thông tin tìm kiếm" onkeyup="check()">
                             <button onclick="myFunction()" type="submit" class="search-btn" disabled id="search">Tìm kiếm</button>
@@ -120,24 +120,24 @@
                 <div class="col-md-3 clearfix">
                     <div class="header-ctn">
                         <!-- Wishlist -->
-                        <%--<div>
+                        <div>
                             <a href="productviewed.jsp">
                                 <i class="fa fa-heart-o"></i>
                                 <span>Đã xem</span>
 
                             </a>
-                        </div>--%>
+                        </div>
                         <!-- /Wishlist -->
 
                         <!-- Cart -->
-                        <div>
+                        <%--<div>
                             <a href="blank.jsp">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>Giỏ hàng</span>
 
                             </a>
 
-                        </div>
+                        </div>--%>
                         <!-- /Cart -->
 
                         <!-- Menu Toogle -->
@@ -187,23 +187,11 @@
 
 
 
+<%--
 <div class="container">
-    <!-- responsive-nav -->
-
-    <h4 style="margin-top: 30px">Số sản phẩm tìm thấy phù hợp: <span style="color: #843534"><%=dsSPTheoGiaBan.size()%></span> sản phẩm</h4>
-
-    <div id="responsive-nav1">
-
-        <ul class="main-nav nav navbar-nav">
-            <li><a href="searchbyprice.jsp?min=2000000&max=4000000&hangSX=<%=request.getParameter("hangSX")%>">Từ 2 đến 4 triệu</a></li>
-            <li><a href="searchbyprice.jsp?min=4000000&max=6000000&hangSX=<%=request.getParameter("hangSX")%>">Từ 4 đến 6 triệu</a></li>
-            <li><a href="searchbyprice.jsp?min=6000000&max=8000000&hangSX=<%=request.getParameter("hangSX")%>">Từ 6 đến 8 triệu</a></li>
-            <li><a href="searchbyprice.jsp?min=8000000&max=10000000&hangSX=<%=request.getParameter("hangSX")%>">Từ 8 đến 10 triệu</a></li>
-            <li><a href="searchbyprice.jsp?min=10000000&max=30000000&hangSX=<%=request.getParameter("hangSX")%>">Trên 10 triệu</a></li>
-        </ul>
-    </div>
-    <!-- /responsive-nav -->
+    <h3 style="margin-top: 30px">Kết quả tìm kiếm: <span style="color: #843534"><%=dsSPTimKiem.size()%></span> sản phẩm</h3>
 </div>
+--%>
 
 
 
@@ -214,60 +202,73 @@
         <!-- row -->
         <div class="row">
 
+            <!-- section title -->
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h3 class="title">Sản phẩm bán chạy</h3>
+                    <div class="section-nav">
+                        <ul class="section-tab-nav tab-nav">
+
+                            <li><a data-toggle="tab" href="#tab2">Xem thêm</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /section title -->
+
             <!-- Products tab & slick -->
             <div class="col-md-12">
-
                 <div class="row">
+                    <div class="row">
 
-                    <!-- product -->
-                    <%
+                        <!-- product -->
+                        <%
 
+                            for (int j=0;j<8;j++)
+                            {
+                                model.KhuyenMai km = spDAOImpl.getKhuyenMai(dsSPBanChay.get(j).getMaSP());
+                                java.text.DecimalFormat df = new DecimalFormat("#.##");
+                                String formatted = df.format(km.getGiaTri());
+                        %>
+                        <a href="product.jsp?maSP=<%=dsSPBanChay.get(j).getMaSP()%>">
+                            <div class="col-md-3 col-xs-6">
 
-                        for(int i=0;i<dsSPTheoGiaBan.size();i++)
-                        {
-                            KhuyenMai km = spDAOImpl.getKhuyenMai(dsSPTheoGiaBan.get(i).getMaSP());
-                            java.text.DecimalFormat df = new java.text.DecimalFormat("#.##");
-                            String formatted = df.format(km.getGiaTri());
-                    %>
-                    <a href="product.jsp?maSP=<%=dsSPTheoGiaBan.get(i).getMaSP()%>">
-                        <div class="col-md-3 col-xs-6">
+                                <div class="product">
+                                    <div class="product-img">
+                                        <img src="ImageServlet?maSP=<%=dsSPBanChay.get(j).getMaSP() %>" alt="">
 
-                            <div class="product">
-                                <div class="product-img">
-                                    <img src="ImageServlet?maSP=<%=dsSPTheoGiaBan.get(i).getMaSP() %>" alt="">
+                                        <div class="product-label">
+                                            <span class="sale">-<%=formatted%>%</span>
+                                        </div>
+                                    </div>
 
-                                    <div class="product-label">
-                                        <span class="sale">-<%=formatted%>%</span>
+                                    <div class="product-body">
+                                        <p class="product-category"><%=dsSPBanChay.get(j).getHangSX()%></p>
+                                        <h3 class="product-name"><a href="#"><%=dsSPBanChay.get(j).getTenSP()%></a></h3>
+                                        <h4 class="product-price"><%=java.text.NumberFormat.getNumberInstance(java.util.Locale.GERMANY).format(dsSPBanChay.get(j).getGiaBan())%>đ</h4>
+                                        <div class="product-rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-o"></i>
+                                        </div>
+
+                                    </div>
+                                    <div class="add-to-cart">
+                                        <a href="CartServlet?command=plus&maSP=<%=dsSPBanChay.get(j).getMaSP()%>"><button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button></a>
                                     </div>
                                 </div>
 
-                                <div class="product-body">
-                                    <p class="product-category"><%=dsSPTheoGiaBan.get(i).getHangSX()%></p>
-                                    <h3 class="product-name"><a href="product.jsp?maSP=<%=dsSPTheoGiaBan.get(i).getMaSP()%>"><%=dsSPTheoGiaBan.get(i).getTenSP()%></a></h3>
-                                    <h4 class="product-price"><%=java.text.NumberFormat.getNumberInstance(java.util.Locale.GERMANY).format(dsSPTheoGiaBan.get(i).getGiaBan())%>đ</h4>
-                                    <div class="product-rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-o"></i>
-                                    </div>
-
-                                </div>
-                                <div class="add-to-cart">
-                                    <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                                </div>
                             </div>
-
-                        </div>
-                    </a>
-                    <%
-                        }
-                    %>
+                        </a>
+                        <%
+                            }
+                        %>
+                    </div>
                 </div>
-
             </div>
-            <!-- Products tab & slick -->
+            <!-- /Products tab & slick -->
         </div>
         <!-- /row -->
     </div>

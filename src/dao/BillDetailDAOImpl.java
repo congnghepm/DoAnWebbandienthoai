@@ -23,6 +23,7 @@ public class BillDetailDAOImpl implements BillDetailDAO{
 
             st.setInt(4, chiTietDonHang.getSoLuong());
             st.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

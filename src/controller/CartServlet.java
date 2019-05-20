@@ -27,8 +27,14 @@ public class CartServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String command = request.getParameter("command");
         String maSP = request.getParameter("maSP");
+
+        System.out.println("ma san pham lan 1: "+ maSP);
         String sl = request.getParameter("soluong");
-        /*int soluong = Integer.parseInt(request.getParameter("sl"));*/
+
+
+       /* String maSP2 = request.getParameter("msp");
+        System.out.println("ma san pham lan 2: "+ maSP2);*/
+
         System.out.println("sô lượng là: "+sl);
 
 
@@ -36,6 +42,8 @@ public class CartServlet extends HttpServlet {
 
         try{
             int mSP = Integer.parseInt(maSP);
+         /* int mSP2 = Integer.parseInt(maSP2);*/
+
 
             SanPham sp = spDAOImpl.getSP(mSP);
             switch (command){
@@ -47,6 +55,18 @@ public class CartServlet extends HttpServlet {
                     }
                     else {
                         cart.plusToCart(mSP, new Item(sp, 1));
+                    }
+                    break;
+               case "remove":
+                    if(cart.getCartItems().containsKey(mSP))
+                    {
+                        cart.removeToCart(mSP);
+                    }
+                    break;
+                case "sub":
+                    if(cart.getCartItems().containsKey(mSP))
+                    {
+                        cart.subToCart(mSP,new Item(sp, cart.getCartItems().get(mSP).getQuantity()));
                     }
                     break;
             }

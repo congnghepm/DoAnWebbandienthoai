@@ -107,13 +107,13 @@
                 <div class="col-md-3 clearfix">
                     <div class="header-ctn">
                         <!-- Wishlist -->
-                        <div>
+                        <%--<div>
                             <a href="productviewed.jsp">
                                 <i class="fa fa-heart-o"></i>
                                 <span>Đã xem</span>
-                                <div class="qty">2</div>
+
                             </a>
-                        </div>
+                        </div>--%>
                         <!-- /Wishlist -->
 
                         <!-- Cart -->
@@ -121,7 +121,7 @@
                             <a href="blank.jsp">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>Giỏ hàng</span>
-                                <div class="qty">3</div>
+
                             </a>
 
                         </div>

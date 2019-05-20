@@ -124,20 +124,20 @@
                             <a href="productviewed.jsp">
                                 <i class="fa fa-heart-o"></i>
                                 <span>Đã xem</span>
-                                <div class="qty">2</div>
+
                             </a>
                         </div>
                         <!-- /Wishlist -->
 
                         <!-- Cart -->
-                        <div>
+                        <%--<div>
                             <a href="blank.jsp">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>Giỏ hàng</span>
-                                <div class="qty">3</div>
+
                             </a>
 
-                        </div>
+                        </div>--%>
                         <!-- /Cart -->
 
                         <!-- Menu Toogle -->
@@ -226,16 +226,11 @@
                                         <span class="sale">-<%=formatted%>%</span>
                                     </div>
                                 </div>
-                                <%
 
-                                    double a =100-(km.getGiaTri());
-                                    double b = (dsSPTimKiem.get(i).getGiaBan()*100)/a;
-
-                                %>
                                 <div class="product-body">
                                     <p class="product-category"><%=dsSPTimKiem.get(i).getHangSX()%></p>
                                     <h3 class="product-name"><a href="product.jsp?maSP=<%=dsSPTimKiem.get(i).getMaSP()%>"><%=dsSPTimKiem.get(i).getTenSP()%></a></h3>
-                                    <h4 class="product-price"><%=NumberFormat.getNumberInstance(Locale.GERMANY).format(dsSPTimKiem.get(i).getGiaBan())%>đ<del class="product-old-price"><%=NumberFormat.getNumberInstance(Locale.GERMANY).format(b)%>đ</del></h4>
+                                    <h4 class="product-price"><%=NumberFormat.getNumberInstance(Locale.GERMANY).format(dsSPTimKiem.get(i).getGiaBan())%>đ</h4>
                                     <div class="product-rating">
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>

@@ -136,13 +136,13 @@
                 <div class="col-md-3 clearfix">
                     <div class="header-ctn">
                         <!-- Wishlist -->
-                        <div>
+                        <%--<div>
                             <a href="productviewed.jsp">
                                 <i class="fa fa-heart-o"></i>
                                 <span>Đã xem</span>
                                 <div class="qty">2</div>
                             </a>
-                        </div>
+                        </div>--%>
                         <!-- /Wishlist -->
 
                         <!-- Cart -->
@@ -150,7 +150,7 @@
                             <a href="blank.jsp">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>Giỏ hàng</span>
-                                <div class="qty">3</div>
+
                             </a>
 
                         </div>
@@ -309,13 +309,8 @@
                         <a class="review-link" href="#">10 Đánh giá | Thêm đánh giá</a>
                     </div>
                     <div>
-                        <%
 
-                            double a =100-(km.getGiaTri());
-                            double b = (sp.getGiaBan()*100)/a;
-
-                        %>
-                        <h3 class="product-price"><%=NumberFormat.getNumberInstance(Locale.GERMANY).format(sp.getGiaBan())%>đ<del class="product-old-price"><%=NumberFormat.getNumberInstance(Locale.GERMANY).format(b)%>đ</del></h3>
+                        <h3 class="product-price"><%=NumberFormat.getNumberInstance(Locale.GERMANY).format(sp.getGiaBan())%>đ</h3>
                     </div>
                     <h4>THÔNG SỐ KỸ THUẬT</h4>
 
@@ -330,18 +325,18 @@
 
                     <div class="add-to-cart">
                         <div class="qty-label">
-                            Số lượng
+                            <%--Số lượng
                             <div class="input-number">
                                 <span class="qty-down">-</span>
                                 <input type="number" value="1" name="soluong" id="soluong">
                                 <span class="qty-up">+</span>
 
-                            </div>
+                            </div>--%>
                             <%=sp.getSoLuongTon()%> sản phẩm có sẵn.
                         </div>
                     </div>
                     <div class="add-to-cart">
-                        <a href="checkout.jsp"><button class="add-to-cart-btn"> Mua ngay</button></a>
+                       <%-- <a href="CartServlet?command=plus&maSP=<%=sp.getMaSP()%>"><button class="add-to-cart-btn"> Mua ngay</button></a>--%>
                         <a href="CartServlet?command=plus&maSP=<%=sp.getMaSP()%>"><button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</button></a>
                     </div>
 
@@ -595,8 +590,7 @@
                 {
 
                     KhuyenMai kmsp = spDAOImpl.getKhuyenMai(dsSP.get(i).getMaSP());
-                    double value1 =100-(kmsp.getGiaTri());
-                    double value2 = (dsSP.get(i).getGiaBan()*100)/value1;
+
                     DecimalFormat df = new DecimalFormat("#.##");
                     String formatted = df.format(kmsp.getGiaTri());
             %>
@@ -614,7 +608,7 @@
                     <div class="product-body">
                         <p class="product-category"><%=dsSP.get(i).getHangSX()%></p>
                         <h3 class="product-name"><a href="#"><%=dsSP.get(i).getTenSP()%></a></h3>
-                        <h4 class="product-price"><%=NumberFormat.getNumberInstance(Locale.GERMANY).format(dsSP.get(i).getGiaBan())%>đ<del class="product-old-price"><%=NumberFormat.getNumberInstance(Locale.GERMANY).format(value2)%>đ</del></h4>
+                        <h4 class="product-price"><%=NumberFormat.getNumberInstance(Locale.GERMANY).format(dsSP.get(i).getGiaBan())%>đ</h4>
                         <div class="product-rating">
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
@@ -625,7 +619,7 @@
 
                     </div>
                     <div class="add-to-cart">
-                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                        <a href="CartServlet?command=plus&maSP=<%=dsSP.get(i).getMaSP()%>"><button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button></a>
                     </div>
                 </div>
 

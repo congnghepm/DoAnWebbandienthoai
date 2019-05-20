@@ -134,13 +134,13 @@
           <div class="col-md-3 clearfix">
             <div class="header-ctn">
               <!-- Wishlist -->
-              <div>
+              <%--<div>
                 <a href="productviewed.jsp">
                   <i class="fa fa-heart-o"></i>
                   <span>Đã xem</span>
-                  <div class="qty">2</div>
+                 &lt;%&ndash; <div class="qty">2</div>&ndash;%&gt;
                 </a>
-              </div>
+              </div>--%>
               <!-- /Wishlist -->
 
               <!-- Cart -->
@@ -148,7 +148,7 @@
                 <a href="blank.jsp">
                   <i class="fa fa-shopping-cart"></i>
                   <span>Giỏ hàng</span>
-                  <div class="qty">3</div>
+                  <%--<div class="qty">3</div>--%>
                 </a>
 
               </div>
@@ -212,7 +212,7 @@
             </div>
             <div class="shop-body">
               <h3>Sản phẩm<br>Bán chạy</h3>
-              <a href="#" class="cta-btn">Xem thêm <i class="fa fa-arrow-circle-right"></i></a>
+              <a href="producthot.jsp" class="cta-btn">Xem thêm <i class="fa fa-arrow-circle-right"></i></a>
             </div>
           </div>
         </div>
@@ -297,17 +297,11 @@
                     <span class="sale">-<%=formatted%>%</span>
                   </div>
                 </div>
-                <%
-
-                    double a =100-(km.getGiaTri());
-                    double b = (dsSPTieuBieu.get(i).getGiaBan()*100)/a;
-
-                %>
 
                 <div class="product-body">
                   <p class="product-category"><%=dsSPTieuBieu.get(i).getHangSX()%></p>
                   <h3 class="product-name"><a href="product.jsp?maSP=<%=dsSPTieuBieu.get(i).getMaSP()%>"><%=dsSPTieuBieu.get(i).getTenSP()%></a></h3>
-                  <h4 class="product-price"><%=NumberFormat.getNumberInstance(Locale.GERMANY).format(dsSPTieuBieu.get(i).getGiaBan())%>đ<del class="product-old-price"><%=NumberFormat.getNumberInstance(Locale.GERMANY).format(b)%>đ</del></h4>
+                  <h4 class="product-price"><%=NumberFormat.getNumberInstance(Locale.GERMANY).format(dsSPTieuBieu.get(i).getGiaBan())%>đ</h4>
                   <div class="product-rating">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
@@ -386,15 +380,11 @@
                       <span class="sale">-<%=formatted%>%</span>
                     </div>
                   </div>
-                  <%
 
-                    double a =100-(km.getGiaTri());
-                    double b = (dsSPBanChay.get(j).getGiaBan()*100)/a;
-                  %>
                   <div class="product-body">
                     <p class="product-category"><%=dsSPBanChay.get(j).getHangSX()%></p>
                     <h3 class="product-name"><a href="#"><%=dsSPBanChay.get(j).getTenSP()%></a></h3>
-                    <h4 class="product-price"><%=NumberFormat.getNumberInstance(Locale.GERMANY).format(dsSPBanChay.get(j).getGiaBan())%>đ<del class="product-old-price"><%=NumberFormat.getNumberInstance(Locale.GERMANY).format(b)%>đ</del></h4>
+                    <h4 class="product-price"><%=NumberFormat.getNumberInstance(Locale.GERMANY).format(dsSPBanChay.get(j).getGiaBan())%>đ</h4>
                     <div class="product-rating">
                       <i class="fa fa-star"></i>
                       <i class="fa fa-star"></i>
@@ -414,6 +404,7 @@
               <%
                 }
               %>
+          </div>
           </div>
         </div>
         <!-- /Products tab & slick -->
@@ -551,6 +542,7 @@
       </div>
       <!-- /container -->
     </div>
+
     <!-- /bottom footer -->
   </footer>
   <!-- /FOOTER -->

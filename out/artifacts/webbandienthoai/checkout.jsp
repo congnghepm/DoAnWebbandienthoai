@@ -74,6 +74,11 @@
                 span.textContent = "Email không đúng định dạng!";
                 return true;
             }
+            else {
+               var span = document.getElementById("statusemail");
+                span.textContent="";
+                return true;
+            }
         }
     </script>
     <!-- kiem tra dinh dang SDT -->
@@ -92,6 +97,12 @@
             {
                 var span = document.getElementById("statusdienthoai");
                 span.textContent = "Yêu cầu số điện thoại là 10 số!";
+                return true;
+            }
+            if(phonenumberRegex.test(str) && str.length==10)
+            {
+                var span = document.getElementById("statusdienthoai");
+                span.textContent="";
                 return true;
             }
         }
@@ -156,13 +167,13 @@
                 <div class="col-md-3 clearfix">
                     <div class="header-ctn">
                         <!-- Wishlist -->
-                        <div>
+                        <%--<div>
                             <a href="productviewed.jsp">
                                 <i class="fa fa-heart-o"></i>
                                 <span>Đã xem</span>
-                                <div class="qty">2</div>
+
                             </a>
-                        </div>
+                        </div>--%>
                         <!-- /Wishlist -->
 
                         <!-- Cart -->
@@ -170,7 +181,7 @@
                             <a href="blank.jsp">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>Giỏ hàng</span>
-                                <div class="qty">3</div>
+
                             </a>
 
                         </div>
@@ -255,10 +266,10 @@
                     </div>
 
                     <div class="form-group">
-                        <input class="input" type="text" name="hoten" placeholder="Họ tên" required>
+                        <input class="input" type="text" name="hoten" id ="hoten" placeholder="Họ tên" required>
                     </div>
                     <div class="form-group">
-                        <input class="input" type="email" name="email" placeholder="Email" onblur="if(!checkEmail(this.value)) checkExistEmail()" required>
+                        <input class="input" type="email" name="email" id="email" placeholder="Email" onblur="if(!checkEmail(this.value)) checkExistEmail()" required>
                     </div>
 
                     <div class="form-group">
@@ -266,7 +277,7 @@
                     </div>
 
                     <div class="form-group">
-                        <input class="input" type="text" name="address" placeholder="Địa chỉ" required>
+                        <input class="input" type="text" name="address" id="address" placeholder="Địa chỉ" required>
                     </div>
 
                     <div class="form-group">
@@ -278,44 +289,7 @@
 
 
                 </div>
-                <!-- /Billing Details -->
 
-                <!-- Shiping Details -->
-                <div class="shiping-details">
-                    <div class="section-title">
-                        <h3 class="title">Địa chỉ giao hàng</h3>
-                    </div>
-                    <div class="input-checkbox">
-                        <input type="checkbox" id="shiping-address">
-                        <label for="shiping-address">
-                            <span></span>
-                            Giao hàng tới địa chỉ khác?
-                        </label>
-                        <div class="caption">
-
-                            <div class="form-group">
-                                <input class="input" type="text" name="hoten2" placeholder="Họ tên" >
-                            </div>
-                            <div class="form-group">
-                                <input class="input" type="email" name="email2" placeholder="Email" >
-                            </div>
-                            <div class="form-group">
-                                <input class="input" type="text" name="address2" placeholder="Địa chỉ">
-                            </div>
-
-                            <div class="form-group">
-                                <input class="input" type="tel" name="tel2" placeholder="Số điện thoại" >
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /Shiping Details -->
-
-                <!-- Order notes -->
-                <div class="order-notes">
-                    <textarea class="input" placeholder="Yêu cầu khác"></textarea>
-                </div>
-                <!-- /Order notes -->
             </div>
 
             <!-- Order Details -->
@@ -358,37 +332,18 @@
                     </div>
                 </div>
 
-                <div class="payment-method">
-                    <div class="input-radio">
-                        <input type="radio" name="payment" id="payment-1">
-                        <label for="payment-1">
-                            <span></span>
-                            Thanh toán bằng tiền mặt
-                        </label>
-
-                    </div>
-                    <div class="input-radio">
-                        <input type="radio" name="payment" id="payment-2">
-                        <label for="payment-2">
-                            <span></span>
-                            Thanh toán bằng thẻ tín dụng
-                        </label>
-
-                    </div>
-
-                </div>
-                <div class="input-checkbox">
+              <%--  <div class="input-checkbox">
                     <input type="checkbox" id="terms">
                     <label for="terms">
                         <span></span>
                         Tôi đã đọc và đồng ý <a href="#">điều khoản và quy định</a>
                     </label>
-                </div>
+                </div>--%>
 
             </div>
             <!-- /Order Details -->
             <div style="margin-top: 40px">
-                <a href="#" ><button class="primary-btn order-submit" type="submit">Đặt hàng</button></a>
+               <button class="primary-btn order-submit" type="submit">Đặt hàng</button>
             </div>
 
         </div>

@@ -119,13 +119,13 @@
                 <div class="col-md-3 clearfix">
                     <div class="header-ctn">
                         <!-- Wishlist -->
-                        <div>
+                       <%-- <div>
                             <a href="#">
                                 <i class="fa fa-heart-o"></i>
                                 <span>Đã xem</span>
-                                <div class="qty">2</div>
+
                             </a>
-                        </div>
+                        </div>--%>
                         <!-- /Wishlist -->
 
                         <!-- Cart -->
@@ -133,7 +133,7 @@
                             <a href="blank.jsp">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>Giỏ hàng</span>
-                                <div class="qty">3</div>
+
                             </a>
 
                         </div>
@@ -204,11 +204,15 @@
                 <table id="cart" class="table table-hover table-condensed">
                     <thead>
                     <tr>
-                        <th style="width:50%">Tên sản phẩm</th>
+                        <th style="width:40%">Tên sản phẩm</th>
                         <th style="width:10%">Giá</th>
                         <th style="width:8%">Số lượng</th>
-                        <th style="width:22%" class="text-center">Thành tiền</th>
-                        <th style="width:10%"> </th>
+
+                        <th style="width:6%">Tăng</th>
+                        <th style="width:6%">Giảm</th>
+
+                        <th style="width:20%" class="text-center">Thành tiền</th>
+                        <th style="width:18%"> </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -226,7 +230,17 @@
                             </div>
                         </td>
                         <td data-th="Price"><%=java.text.NumberFormat.getNumberInstance(java.util.Locale.GERMANY).format(list.getValue().getSanPham().getGiaBan())%>đ </td>
-                        <td data-th="Quantity"><input class="form-control text-center" value="<%=list.getValue().getQuantity()%>" type="number">
+                        <td data-th="Quantity"><input class="form-control text-center" value="<%=list.getValue().getQuantity()%>" type="number" disabled>
+                        </td>
+                        <td class="actions" data-th="">
+
+                            <a href="CartServlet?command=plus&maSP=<%=list.getValue().getSanPham().getMaSP()%>"><button class="btn btn-primary btn-sm"><i class="fa fa-arrow-circle-up"></i></button></a>
+
+                        </td>
+                        <td class="actions" data-th="">
+
+                            <a href="CartServlet?command=sub&maSP=<%=list.getValue().getSanPham().getMaSP()%>"><button class="btn btn-primary btn-sm"><i class="fa fa-arrow-circle-down"></i></button></a>
+
                         </td>
                         <%
                             double giaban = list.getValue().getSanPham().getGiaBan();
@@ -235,10 +249,10 @@
                         %>
                         <td data-th="Subtotal" class="text-center"><%= java.text.NumberFormat.getNumberInstance(java.util.Locale.GERMANY).format(tongtien)%>đ</td>
                         <td class="actions" data-th="">
-                            <button class="btn btn-info btn-sm"><i class="fa fa-edit"></i>
-                            </button>
-                            <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i>
-                            </button>
+                           <%-- <button class="btn btn-info btn-sm"><i class="fa fa-edit"></i>
+                            </button>--%>
+                            <a href="CartServlet?command=remove&maSP=<%=list.getValue().getSanPham().getMaSP()%>"><button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button></a>
+
                         </td>
                     </tr>
                     <%}%>
